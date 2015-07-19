@@ -10,6 +10,8 @@ angular.module('extendsNgModel').directive('ngModelLocation', function($location
           return value === true || value === 'true';
         case 'date':
           return $filter('date')(value, 'yyyy-MM-dd');
+        case 'month':
+          return $filter('date')(value, 'yyyy-MM');
         default :
           return value;
       }
