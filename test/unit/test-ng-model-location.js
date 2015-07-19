@@ -75,4 +75,24 @@ describe('ngModelLocation', function(){
     expect(location.search().number).toBe(8.90);
   }));
 
+  it('should behave the same with checkboxes', inject(function() {
+    var element = compile('<input type="checkbox" ng-model="checkbox" ng-model-location="" />')(scope);
+    scope.checkbox = true;
+
+    scope.$digest();
+    expect(scope.checkbox).toBeTruthy();
+    expect(element.attr('checked')).toBeTruthy();
+
+    location.search('checkbox', false);
+    scope.$digest();
+    expect(scope.checkbox).toBeFalsy();
+    expect(element.attr('checked')).toBeFalsy();
+
+    element.attr('checked', 'checked');
+    element.triggerHandler('click');
+    scope.$digest();
+    expect(scope.checkbox).toBeTruthy();
+    expect(location.search().checkbox).toBeTruthy();
+  }));
+
 });
