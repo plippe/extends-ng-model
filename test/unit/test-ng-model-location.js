@@ -215,4 +215,27 @@ describe('ngModelLocation', function(){
     expect(location.search().datetime).toBe('2003-01-01T03:00:00');
   }));
 
+  it('should behave the same with radio buttons', inject(function() {
+    var elementA = compile('<input type="radio" value="a" ng-model="radio" ng-model-location="">')(scope);
+    var elementB = compile('<input type="radio" value="b" ng-model="radio" ng-model-location="">')(scope);
+    scope.radio = 'a';
+
+    scope.$digest();
+    expect(scope.radio).toBe('a');
+    expect(elementA.attr('checked')).toBeTruthy();
+    expect(elementB.attr('checked')).toBeFalsy();
+
+    location.search('radio', 'b');
+    scope.$digest();
+    expect(scope.radio).toBe('b');
+    expect(elementA.attr('checked')).toBeFalsy();
+    expect(elementB.attr('checked')).toBeTruthy();
+
+    elementA.attr('checked', 'checked');
+    elementA.triggerHandler('click');
+    scope.$digest();
+    expect(scope.radio).toEqual('a');
+    expect(location.search().radio).toBe('a');
+  }));
+
 });
