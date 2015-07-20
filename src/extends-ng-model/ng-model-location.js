@@ -16,6 +16,8 @@ angular.module('extendsNgModel').directive('ngModelLocation', function($location
           return $filter('date')(value, 'yyyy-Www');
         case 'time':
           return $filter('date')(value, 'HH:mm:ss');
+        case 'datetime-local':
+          return $filter('date')(value, 'yyyy-MM-ddTHH:mm:ss');
         default :
           return value;
       }

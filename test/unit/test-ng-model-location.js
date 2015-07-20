@@ -195,4 +195,24 @@ describe('ngModelLocation', function(){
     expect(location.search().time).toBe('03:00:00');
   }));
 
+  it('should behave the same with date times', inject(function() {
+    var element = compile('<input type="datetime-local" ng-model="datetime" ng-model-location="" />')(scope);
+    scope.datetime = new Date('2000-01-01T01:00:00');
+
+    scope.$digest();
+    expect(scope.datetime).toEqual(new Date('2000-01-01T01:00:00'));
+    expect(element.val()).toBe('2000-01-01T01:00:00');
+
+    location.search('datetime', '2001-01-01T02:00:00');
+    scope.$digest();
+    expect(scope.datetime).toEqual(new Date('2001-01-01T02:00:00'));
+    expect(element.val()).toBe('2001-01-01T02:00:00');
+
+    element.val('2003-01-01T03:00:00');
+    element.triggerHandler('change');
+    scope.$digest();
+    expect(scope.datetime).toEqual(new Date('2003-01-01T03:00:00'));
+    expect(location.search().datetime).toBe('2003-01-01T03:00:00');
+  }));
+
 });
