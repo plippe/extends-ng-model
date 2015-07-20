@@ -175,4 +175,24 @@ describe('ngModelLocation', function(){
     expect(location.search().week).toBe('2002-W01');
   }));
 
+  it('should behave the same with times', inject(function() {
+    var element = compile('<input type="time" ng-model="time" ng-model-location="" />')(scope);
+    scope.time = new Date('1970-01-01 01:00:00');
+
+    scope.$digest();
+    expect(scope.time).toEqual(new Date('1970-01-01 01:00:00'));
+    expect(element.val()).toBe('01:00:00');
+
+    location.search('time', '02:00:00');
+    scope.$digest();
+    expect(scope.time).toEqual(new Date('1970-01-01 02:00:00'));
+    expect(element.val()).toBe('02:00:00');
+
+    element.val('03:00:00');
+    element.triggerHandler('change');
+    scope.$digest();
+    expect(scope.time).toEqual(new Date('1970-01-01 03:00:00'));
+    expect(location.search().time).toBe('03:00:00');
+  }));
+
 });
