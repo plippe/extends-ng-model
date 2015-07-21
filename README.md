@@ -45,3 +45,18 @@ Your html should look similar to the following
 </body>
 </html>
 ```
+
+## ngModelLocation
+
+This directive is in charge of data binding between an `ngModel` and a parameter in the [query string](https://en.wikipedia.org/wiki/Query_string). By implementing this directive, your users should be able to bookmark and share URLs.
+
+The following example will synchronise `filter.name`, the `ng-model` and the query string argument. When the user types or when the url changes, the other will update itself.
+
+```html
+<label for="title">Title</label>
+<input name="title" ng-model="filter.name" ng-model-location="" />
+```
+
+This works for [all input types defined by Angular](https://docs.angularjs.org/api/ng/input) as well as `select` and `textarea` ([see examples](https://github.com/Plippe/extends-ng-model/blob/master/example/ng-model-location.html)).
+
+**Warning:** `ngModelLocation` requires the `ngModel` directive to work
