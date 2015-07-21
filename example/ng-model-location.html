@@ -56,6 +56,13 @@
                 <label>Url</label>
                 <input type="url" ng-model="form.url" ng-model-location="" />
             </div>
+            <div>
+                <label>Select</label>
+                <select ng-model="form.select" ng-model-location="">
+                  <option value="a">A</option>
+                  <option value="b">B</option>
+                </select>
+            </div>
         </form>
 
         <pre class="raw">{{form | json}}</pre>
@@ -77,7 +84,8 @@
                     time: new Date('1970-01-01 01:00:00'),
                     datetime: new Date('2001-01-01 01:00:00'),
                     radio: 'a',
-                    url: 'http://google.com'
+                    url: 'http://google.com',
+                    select: 'a'
                 }
             });
     </script>

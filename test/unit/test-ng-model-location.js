@@ -258,4 +258,29 @@ describe('ngModelLocation', function(){
     expect(location.search().url).toBe('http://bing.com');
   }));
 
+  it('should behave the same with select', inject(function() {
+    var element = compile(' \
+      <select ng-model="select" ng-model-location=""> \
+        <option value="a">A</option> \
+        <option value="b">B</option> \
+      </select> \
+    ')(scope);
+    scope.select = 'a';
+
+    scope.$digest();
+    expect(scope.select).toBe('a');
+    expect(element.val()).toBe('a');
+
+    location.search('select', 'b');
+    scope.$digest();
+    expect(scope.select).toBe('b');
+    expect(element.val()).toBe('b');
+
+    element.val('a');
+    element.triggerHandler('change');
+    scope.$digest();
+    expect(scope.select).toBe('a');
+    expect(location.search().select).toBe('a');
+  }));
+
 });
