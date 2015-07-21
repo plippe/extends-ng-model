@@ -283,4 +283,24 @@ describe('ngModelLocation', function(){
     expect(location.search().select).toBe('a');
   }));
 
+  it('should behave the same with textarea', inject(function() {
+    var element = compile('<textarea ng-model="textarea" ng-model-location=""></textarea>')(scope);
+    scope.textarea = 'a';
+
+    scope.$digest();
+    expect(scope.textarea).toBe('a');
+    expect(element.val()).toBe('a');
+
+    location.search('textarea', 'b');
+    scope.$digest();
+    expect(scope.textarea).toBe('b');
+    expect(element.val()).toBe('b');
+
+    element.val('a');
+    element.triggerHandler('change');
+    scope.$digest();
+    expect(scope.textarea).toBe('a');
+    expect(location.search().textarea).toBe('a');
+  }));
+
 });

@@ -63,6 +63,10 @@
                   <option value="b">B</option>
                 </select>
             </div>
+            <div>
+                <label>Text Area</label>
+                <textarea ng-model="form.textarea" ng-model-location=""></textarea>
+            </div>
         </form>
 
         <pre class="raw">{{form | json}}</pre>
@@ -85,7 +89,8 @@
                     datetime: new Date('2001-01-01 01:00:00'),
                     radio: 'a',
                     url: 'http://google.com',
-                    select: 'a'
+                    select: 'a',
+                    textarea: 'a'
                 }
             });
     </script>
