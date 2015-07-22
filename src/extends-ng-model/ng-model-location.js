@@ -1,30 +1,11 @@
-angular.module('extendsNgModel').directive('ngModelLocation', function($location, $filter) {
+angular.module('extendsNgModel').directive('ngModelLocation', function($location, ngModelConverter) {
   var link = function(scope, element, attributes, ngModelCtrl) {
-    var searchKey = attributes.ngModelLocation || attributes.ngModel;
-    var searchValue = function() { return $location.search()[searchKey]; }
-
-    var inputType = (attributes.type || 'text').toLowerCase();
-    var updateValueBasedOnInputType = function(value) {
-      switch(inputType) {
-        case 'checkbox':
-          return value === true || value === 'true';
-        case 'date':
-          return $filter('date')(value, 'yyyy-MM-dd');
-        case 'month':
-          return $filter('date')(value, 'yyyy-MM');
-        case 'week':
-          return $filter('date')(value, 'yyyy-Www');
-        case 'time':
-          return $filter('date')(value, 'HH:mm:ss');
-        case 'datetime-local':
-          return $filter('date')(value, 'yyyy-MM-ddTHH:mm:ss');
-        default :
-          return value;
-      }
-    }
+    var inputType = (attributes.type || 'text'),
+      searchKey = attributes.ngModelLocation || attributes.ngModel,
+      searchValue = function() { return $location.search()[searchKey]; };
 
     var updateSearchValue = function(ngModelValue) {
-      var value = updateValueBasedOnInputType(ngModelValue);
+      var value = ngModelConverter(ngModelValue, inputType);
 
       $location.search(searchKey, value);
       return ngModelValue;
@@ -32,7 +13,7 @@ angular.module('extendsNgModel').directive('ngModelLocation', function($location
 
     var updateModelValue = function(searchValue) {
       var value = angular.isDefined(searchValue) ? searchValue : ngModelCtrl.$modelValue,
-        updatedValue = updateValueBasedOnInputType(value);
+        updatedValue = ngModelConverter(value, inputType);
 
       ngModelCtrl.$setViewValue(updatedValue, this);
       ngModelCtrl.$render();
