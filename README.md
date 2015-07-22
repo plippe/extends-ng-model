@@ -31,7 +31,8 @@ Your html should look similar to the following
     <!-- Load Angular -->
     <script src="bower_components/angular/angular.min.js"></script>
     <!-- Load Extends ngModel -->
-    <script src="bower_components/extends-ng-model/dist/extends-ng-model.min.js"></script>
+    <script src="bower_components/extends-ng-model/dist/extends-ng-model.min.js">
+    </script>
     ...
     <script>
         var myApp = angular.module('myApp', [
