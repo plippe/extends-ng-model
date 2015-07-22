@@ -59,4 +59,13 @@ The following example will synchronise `filter.name`, the `ng-model` and the que
 
 This works for [all input types defined by Angular](https://docs.angularjs.org/api/ng/input) as well as `select` and `textarea` ([see examples](https://github.com/Plippe/extends-ng-model/blob/master/example/ng-model-location.html)).
 
+If you prefer a query string name different to the `ngModel` name, set the desired value in the `ngModelLocation` argument like the example bellow.
+
+```html
+<label for="title">Title</label>
+<input name="title"
+  ng-model="accessibleInScope"
+  ng-model-location="accessibleInLocation" />
+```
+
 **Warning:** `ngModelLocation` requires the `ngModel` directive to work
