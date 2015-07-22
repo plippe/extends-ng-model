@@ -303,4 +303,29 @@ describe('ngModelLocation', function(){
     expect(location.search().textarea).toBe('a');
   }));
 
+  it('should allow custom location argument name', inject(function() {
+    var element = compile('<input ng-model="input" ng-model-location="search"></textarea>')(scope);
+    scope.input = 'abc';
+
+    scope.$digest();
+    expect(scope.input).toBe('abc');
+    expect(element.val()).toBe('abc');
+
+    location.search('input', '123');
+    scope.$digest();
+    expect(scope.input).toBe('abc');
+    expect(element.val()).toBe('abc');
+
+    location.search('search', '123');
+    scope.$digest();
+    expect(scope.input).toBe('123');
+    expect(element.val()).toBe('123');
+
+    element.val('abc');
+    element.triggerHandler('change');
+    scope.$digest();
+    expect(scope.input).toBe('abc');
+    expect(location.search().input).toBe('123');
+    expect(location.search().search).toBe('abc');
+  }));
 });
