@@ -10,8 +10,17 @@ module.exports = function(config){
     frameworks: ['jasmine'],
     browsers : ['Chrome'],
     plugins : [
+      'karma-coverage',
+      'karma-coveralls',
       'karma-chrome-launcher',
       'karma-jasmine'
-    ]
+    ],
+
+    preprocessors: { 'dist/**/*.js': 'coverage' },
+    reporters: ['coverage', 'coveralls'],
+    coverageReporter: {
+      type : 'lcov',
+      dir : 'coverage/'
+    }
   });
 };
