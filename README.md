@@ -1,4 +1,4 @@
-# Extends ngModel &nbsp; [![Build Status Image](https://travis-ci.org/Plippe/extends-ng-model.svg)](https://travis-ci.org/Plippe/extends-ng-model)  [![Coverage Status Image](https://coveralls.io/repos/Plippe/extends-ng-model/badge.svg?branch=master&service=github)](https://coveralls.io/github/Plippe/extends-ng-model?branch=master)
+# Extends ngModel &nbsp; [![Build Status Image](https://api.travis-ci.org/Plippe/extends-ng-model.svg?branch=master)](https://travis-ci.org/Plippe/extends-ng-model)  [![Coverage Status Image](https://coveralls.io/repos/Plippe/extends-ng-model/badge.svg?branch=master&service=github)](https://coveralls.io/github/Plippe/extends-ng-model?branch=master)
 
 ## Overview
 
