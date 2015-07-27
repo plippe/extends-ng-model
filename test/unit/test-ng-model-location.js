@@ -2,7 +2,7 @@ describe('ngModelLocation', function(){
 
   beforeEach(module('extendsNgModel'));
 
-  var compile, location;
+  var compile, location, scope;
   beforeEach(inject(function($injector){
     compile = $injector.get('$compile');
     location = $injector.get('$location');
