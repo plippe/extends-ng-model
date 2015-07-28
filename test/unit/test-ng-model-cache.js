@@ -238,4 +238,24 @@ describe('ngModelCache', function(){
     expect(cache.get('radio')).toBe('a');
   }));
 
+  it('should behave the same with urls', inject(function() {
+    var element = compile('<input type="url" ng-model="url" ng-model-cache="" />')(scope);
+    scope.url = 'http://google.com';
+
+    scope.$digest();
+    expect(scope.url).toBe('http://google.com');
+    expect(element.val()).toBe('http://google.com');
+
+    cache.put('url', 'http://yahoo.com');
+    scope.$digest();
+    expect(scope.url).toBe('http://yahoo.com');
+    expect(element.val()).toBe('http://yahoo.com');
+
+    element.val('http://bing.com');
+    element.triggerHandler('change');
+    scope.$digest();
+    expect(scope.url).toBe('http://bing.com');
+    expect(cache.get('url')).toBe('http://bing.com');
+  }));
+
 });

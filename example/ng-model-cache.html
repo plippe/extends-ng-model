@@ -58,6 +58,10 @@
                   <input type="radio" value="a" ng-model="form.radio" ng-model-cache="">
                   <input type="radio" value="b" ng-model="form.radio" ng-model-cache="">
               </div>
+              <div>
+                  <label>Url</label>
+                  <input type="url" ng-model="form.url" ng-model-cache="" />
+              </div>
           </form>
 
           <pre class="raw">{{form | json}}</pre>
@@ -79,7 +83,8 @@
                     week: new Date('2001-01-01'),
                     time: new Date('1970-01-01 01:00:00'),
                     datetime: new Date('2001-01-01 01:00:00'),
-                    radio: 'a'
+                    radio: 'a',
+                    url: 'http://google.com'
                 }
             });
     </script>
