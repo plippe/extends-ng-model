@@ -115,4 +115,24 @@ describe('ngModelCache', function(){
     expect(cache.get('date')).toBe('2002-01-01');
   }));
 
+  it('should behave the same with emails', inject(function() {
+    var element = compile('<input type="email" ng-model="email" ng-model-cache="" />')(scope);
+    scope.email = 'ab@cd.ef';
+
+    scope.$digest();
+    expect(scope.email).toBe('ab@cd.ef');
+    expect(element.val()).toBe('ab@cd.ef');
+
+    cache.put('email', 'cb@ef.ab');
+    scope.$digest();
+    expect(scope.email).toBe('cb@ef.ab');
+    expect(element.val()).toBe('cb@ef.ab');
+
+    element.val('ef@ab.cd');
+    element.triggerHandler('change');
+    scope.$digest();
+    expect(scope.email).toBe('ef@ab.cd');
+    expect(cache.get('email')).toBe('ef@ab.cd');
+  }));
+
 });
