@@ -25,6 +25,10 @@
                   <label>Number</label>
                   <input type="number" ng-model="form.number" ng-model-cache="" />
               </div>
+              <div>
+                  <label>Checkbox</label>
+                  <input type="checkbox" ng-model="form.checkbox" ng-model-cache="" />
+              </div>
           </form>
 
           <pre class="raw">{{form | json}}</pre>
@@ -38,7 +42,8 @@
             .controller("myController", function($scope) {
                 $scope.form = {
                     text: "abcd",
-                    number: 123
+                    number: 123,
+                    checkbox: true
                 }
             });
     </script>
