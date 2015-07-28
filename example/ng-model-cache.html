@@ -37,6 +37,10 @@
                   <label>Email</label>
                   <input type="email" ng-model="form.email" ng-model-cache="" />
               </div>
+              <div>
+                  <label>Month</label>
+                  <input type="month" ng-model="form.month" ng-model-cache="" />
+              </div>
           </form>
 
           <pre class="raw">{{form | json}}</pre>
@@ -53,7 +57,8 @@
                     number: 123,
                     checkbox: true,
                     date: new Date('2001-01-01'),
-                    email: "ab@cd.ef"
+                    email: "ab@cd.ef",
+                    month: new Date('2001-01')
                 }
             });
     </script>

@@ -135,4 +135,24 @@ describe('ngModelCache', function(){
     expect(cache.get('email')).toBe('ef@ab.cd');
   }));
 
+  it('should behave the same with months', inject(function() {
+    var element = compile('<input type="month" ng-model="month" ng-model-cache="" />')(scope);
+    scope.month = new Date('2000-01');
+
+    scope.$digest();
+    expect(scope.month).toEqual(new Date('2000-01'));
+    expect(element.val()).toBe('2000-01');
+
+    cache.put('month', '2001-01');
+    scope.$digest();
+    expect(scope.month).toEqual(new Date('2001-01'));
+    expect(element.val()).toBe('2001-01');
+
+    element.val('2002-01');
+    element.triggerHandler('change');
+    scope.$digest();
+    expect(scope.month).toEqual(new Date('2002-01'));
+    expect(cache.get('month')).toBe('2002-01');
+  }));
+
 });
