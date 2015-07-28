@@ -283,4 +283,24 @@ describe('ngModelCache', function(){
     expect(cache.get('select')).toBe('a');
   }));
 
+  it('should behave the same with textarea', inject(function() {
+    var element = compile('<textarea ng-model="textarea" ng-model-cache=""></textarea>')(scope);
+    scope.textarea = 'a';
+
+    scope.$digest();
+    expect(scope.textarea).toBe('a');
+    expect(element.val()).toBe('a');
+
+    cache.put('textarea', 'b');
+    scope.$digest();
+    expect(scope.textarea).toBe('b');
+    expect(element.val()).toBe('b');
+
+    element.val('a');
+    element.triggerHandler('change');
+    scope.$digest();
+    expect(scope.textarea).toBe('a');
+    expect(cache.get('textarea')).toBe('a');
+  }));
+
 });
