@@ -95,4 +95,24 @@ describe('ngModelCache', function(){
     expect(cache.get('checkbox')).toBeTruthy();
   }));
 
+  it('should behave the same with dates', inject(function() {
+    var element = compile('<input type="date" ng-model="date" ng-model-cache="" />')(scope);
+    scope.date = new Date('2000-01-01');
+
+    scope.$digest();
+    expect(scope.date).toEqual(new Date('2000-01-01'));
+    expect(element.val()).toBe('2000-01-01');
+
+    cache.put('date', '2001-01-01');
+    scope.$digest();
+    expect(scope.date).toEqual(new Date('2001-01-01'));
+    expect(element.val()).toBe('2001-01-01');
+
+    element.val('2002-01-01');
+    element.triggerHandler('change');
+    scope.$digest();
+    expect(scope.date).toEqual(new Date('2002-01-01'));
+    expect(cache.get('date')).toBe('2002-01-01');
+  }));
+
 });
