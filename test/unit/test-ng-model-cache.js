@@ -303,4 +303,29 @@ describe('ngModelCache', function(){
     expect(cache.get('textarea')).toBe('a');
   }));
 
+  it('should allow custom cache argument name', inject(function() {
+    var element = compile('<input ng-model="input" ng-model-cache="search" />')(scope);
+    scope.input = 'abc';
+
+    scope.$digest();
+    expect(scope.input).toBe('abc');
+    expect(element.val()).toBe('abc');
+
+    cache.put('input', '123');
+    scope.$digest();
+    expect(scope.input).toBe('abc');
+    expect(element.val()).toBe('abc');
+
+    cache.put('search', '123');
+    scope.$digest();
+    expect(scope.input).toBe('123');
+    expect(element.val()).toBe('123');
+
+    element.val('abc');
+    element.triggerHandler('change');
+    scope.$digest();
+    expect(scope.input).toBe('abc');
+    expect(cache.get('input')).toBe('123');
+    expect(cache.get('search')).toBe('abc');
+  }));
 });
