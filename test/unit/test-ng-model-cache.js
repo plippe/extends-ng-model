@@ -55,4 +55,24 @@ describe('ngModelCache', function(){
     expect(cache.get('text')).toBe('new value');
   }));
 
+  it('should behave the same with numbers', inject(function() {
+    var element = compile('<input type="number" ng-model="number" ng-model-cache="" />')(scope);
+    scope.number = 123.45;
+
+    scope.$digest();
+    expect(scope.number).toBe(123.45);
+    expect(element.val()).toBe('123.45');
+
+    cache.put('number', 67);
+    scope.$digest();
+    expect(scope.number).toBe(67);
+    expect(element.val()).toBe('67');
+
+    element.val('8.90');
+    element.triggerHandler('change');
+    scope.$digest();
+    expect(scope.number).toBe(8.90);
+    expect(cache.get('number')).toBe(8.90);
+  }));
+
 });

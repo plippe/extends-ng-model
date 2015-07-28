@@ -21,6 +21,10 @@
                   <label>Text</label>
                   <input type="text" ng-model="form.text" ng-model-cache="" />
               </div>
+              <div>
+                  <label>Number</label>
+                  <input type="number" ng-model="form.number" ng-model-cache="" />
+              </div>
           </form>
 
           <pre class="raw">{{form | json}}</pre>
@@ -33,7 +37,8 @@
         angular.module("myApp", ['extendsNgModel'])
             .controller("myController", function($scope) {
                 $scope.form = {
-                    text: "abcd"
+                    text: "abcd",
+                    number: 123
                 }
             });
     </script>
