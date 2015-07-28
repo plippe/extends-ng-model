@@ -29,6 +29,10 @@
                   <label>Checkbox</label>
                   <input type="checkbox" ng-model="form.checkbox" ng-model-cache="" />
               </div>
+              <div>
+                  <label>Date</label>
+                  <input type="date" ng-model="form.date" ng-model-cache="" />
+              </div>
           </form>
 
           <pre class="raw">{{form | json}}</pre>
@@ -43,7 +47,8 @@
                 $scope.form = {
                     text: "abcd",
                     number: 123,
-                    checkbox: true
+                    checkbox: true,
+                    date: new Date('2001-01-01')
                 }
             });
     </script>
