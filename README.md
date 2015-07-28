@@ -70,3 +70,28 @@ If you prefer a query string name different to the `ngModel` name, set the desir
 ```
 
 **Warning:** `ngModelLocation` requires the `ngModel` directive to work
+
+
+## ngModelCache
+
+This directive is in charge of data binding between an `ngModel` and a parameter in the [cache](https://docs.angularjs.org/api/ng/type/$cacheFactory.Cache). By implementing this directive, you could easily implement multi step forms.
+
+The following example will synchronise `form.name`, the `ng-model` and the cache argument. When the user types or when the cache changes, the other will update itself.
+
+```html
+<label for="title">Name</label>
+<input name="title" ng-model="form.name" ng-model-cache="" />
+```
+
+This works for [all input types defined by Angular](https://docs.angularjs.org/api/ng/input) as well as `select` and `textarea` ([see examples](https://github.com/Plippe/extends-ng-model/blob/master/example/ng-model-cache.html)).
+
+If you prefer a cache name different to the `ngModel` name, set the desired value in the `ngModelCache` argument like the example bellow.
+
+```html
+<label for="title">Title</label>
+<input name="title"
+  ng-model="accessibleInScope"
+  ng-model-cache="accessibleInLocation" />
+```
+
+**Warning:** `ngModelCache` requires the `ngModel` directive to work
