@@ -1,0 +1,41 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+  <style>
+    label { display:inline-block; width: 200px; }
+    form { padding-bottom: 25px; }
+    form div { padding-bottom: 5px; }
+  </style>
+</head>
+<body>
+    <h1>Example: ngModelCache - rename</h1>
+
+    <a href="#" ng-init="showForm = true" ng-click="showForm = !showForm">
+      Click here to reset the Form
+    </a>
+
+    <div ng-if="showForm">
+      <div ng-controller="myController">
+          <form>
+              <div>
+                  <label>Search by Name</label>
+                  <input type="text" ng-model="form.name" ng-model-cache="name" />
+              </div>
+          </form>
+
+          <pre class="raw">{{form | json}}</pre>
+      </div>
+    </div>
+
+    <script src="../bower_components/angular/angular.min.js"></script>
+    <script src="../dist/extends-ng-model.min.js"></script>
+    <script>
+        angular.module("myApp", ['extendsNgModel'])
+            .controller("myController", function($scope) {
+                $scope.form = {
+                    name: "abcd"
+                }
+            });
+    </script>
+</body>
+</html>
