@@ -155,4 +155,24 @@ describe('ngModelCache', function(){
     expect(cache.get('month')).toBe('2002-01');
   }));
 
+  it('should behave the same with weeks', inject(function() {
+    var element = compile('<input type="week" ng-model="week" ng-model-cache="" />')(scope);
+    scope.week = new Date('2000-01-03');
+
+    scope.$digest();
+    expect(scope.week).toEqual(new Date('2000-01-03'));
+    expect(element.val()).toBe('2000-W01');
+
+    cache.put('week', '2001-W01');
+    scope.$digest();
+    expect(scope.week).toEqual(new Date('2001-01-04'));
+    expect(element.val()).toBe('2001-W01');
+
+    element.val('2002-W01');
+    element.triggerHandler('change');
+    scope.$digest();
+    expect(scope.week).toEqual(new Date('2002-01-03'));
+    expect(cache.get('week')).toBe('2002-W01');
+  }));
+
 });
