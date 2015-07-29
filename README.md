@@ -95,3 +95,30 @@ If you prefer a cache name different to the `ngModel` name, set the desired valu
 ```
 
 **Warning:** `ngModelCache` requires the `ngModel` directive to work
+
+
+## ngModelCookie
+
+This directive is in charge of data binding between an `ngModel` and a [cookie](https://docs.angularjs.org/api/ngCookies/service/$cookies). By implementing this directive, you save user input over multiple sessions.
+
+The following example will synchronise `form.pageSize`, the `ng-model` and the cookie. When the user types or when the cookie changes, the other will update itself.
+
+```html
+<label for="title">Name</label>
+<input name="title" ng-model="form.pageSize" ng-model-cookie="" />
+```
+
+This works for [all input types defined by Angular](https://docs.angularjs.org/api/ng/input) as well as `select` and `textarea` ([see examples](https://github.com/Plippe/extends-ng-model/blob/master/example/ng-model-cookie.html)).
+
+If you prefer a cookie name different to the `ngModel` name, set the desired value in the `ngModelCookie` argument like the example bellow.
+
+```html
+<label for="title">Title</label>
+<input name="title"
+  ng-model="accessibleInScope"
+  ng-model-cookie="accessibleInLocation" />
+```
+
+**Warning:**
+  - `ngModelCookie` requires the `ngCookies` module to work
+  - `ngModelCookie` requires the `ngModel` directive to work
