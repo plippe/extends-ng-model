@@ -3,6 +3,7 @@ module.exports = function(config){
     basePath : '../',
     files : [
       'node_modules/angular/angular.js',
+      'node_modules/angular-cookies/angular-cookies.js',
       'node_modules/angular-mocks/angular-mocks.js',
       'dist/**/*.js',
       'test/**/test-*.js'
