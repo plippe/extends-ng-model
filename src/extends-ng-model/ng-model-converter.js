@@ -1,6 +1,9 @@
 angular.module('extendsNgModel').provider('ngModelConverter', function() {
   var customConverter = {};
-  this.addConverter = function(inputType, f) { customConverter[inputType] = f; }
+  this.addConverter = function(storageName, inputType, f) {
+    if(!(storageName in customConverter)) { customConverter[storageName] = {}; }
+    customConverter[storageName][inputType] = f;
+  }
 
   this.$get = function($filter) {
     var dateFilter = $filter('date'),
@@ -13,11 +16,14 @@ angular.module('extendsNgModel').provider('ngModelConverter', function() {
         'datetime-local': function(value) { return dateFilter(value, 'yyyy-MM-ddTHH:mm:ss') }
       };
 
-    return function(value, inputType) {
+    return function(storageName, inputType, value) {
       switch (true) {
-        case (inputType in customConverter): return customConverter[inputType](value);
-        case (inputType in defaultConverter): return defaultConverter[inputType](value);
-        default: return value;
+        case (storageName in customConverter && inputType in customConverter[storageName]):
+          return customConverter[storageName][inputType](value);
+        case (inputType in defaultConverter):
+          return defaultConverter[inputType](value);
+        default:
+          return value;
       }
     };
   };
