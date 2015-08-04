@@ -6,7 +6,7 @@ angular.module('extendsNgModel').factory('ngModelStorage', function(ngModelConve
         storageValue = getValue(storageKey);
 
       var updateStorageValue = function(ngModelValue) {
-        var updatedValue = ngModelConverter(storageName, inputType, ngModelValue);
+        var updatedValue = ngModelConverter.toStorage(storageName, inputType, ngModelValue);
 
         putValue(storageKey, updatedValue);
         return ngModelValue;
@@ -14,7 +14,7 @@ angular.module('extendsNgModel').factory('ngModelStorage', function(ngModelConve
 
       var updateModelValue = function(storageValue) {
         var value = angular.isDefined(storageValue) ? storageValue : ngModelCtrl.$modelValue,
-          updatedValue = ngModelConverter(storageName, inputType, value);
+          updatedValue = ngModelConverter.fromStorage(storageName, inputType, value);
 
         ngModelCtrl.$setViewValue(updatedValue, this);
         ngModelCtrl.$render();
