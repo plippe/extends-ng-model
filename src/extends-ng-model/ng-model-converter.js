@@ -1,7 +1,10 @@
 angular.module('extendsNgModel').provider('ngModelConverter', function() {
+  var customConverter = {};
+  this.addConverter = function(inputType, f) { customConverter[inputType] = f; }
+
   this.$get = function($filter) {
     var dateFilter = $filter('date'),
-      converter = {
+      defaultConverter = {
         'checkbox': function(value) { return value === true || value === 'true'; },
         'date': function(value) { return dateFilter(value, 'yyyy-MM-dd') },
         'month': function(value) { return dateFilter(value, 'yyyy-MM') },
@@ -10,12 +13,12 @@ angular.module('extendsNgModel').provider('ngModelConverter', function() {
         'datetime-local': function(value) { return dateFilter(value, 'yyyy-MM-ddTHH:mm:ss') }
       };
 
-
-
     return function(value, inputType) {
-      return inputType in converter ?
-        converter[inputType](value) :
-        value;
+      switch (true) {
+        case (inputType in customConverter): return customConverter[inputType](value);
+        case (inputType in defaultConverter): return defaultConverter[inputType](value);
+        default: return value;
+      }
     };
   };
 });

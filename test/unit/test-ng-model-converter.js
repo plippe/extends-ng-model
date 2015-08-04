@@ -2,6 +2,13 @@ describe('ngModelConverter', function(){
 
   beforeEach(module('extendsNgModel'));
 
+  var converterProvider;
+  beforeEach(function(){
+    module(function(ngModelConverterProvider){
+      converterProvider=ngModelConverterProvider;
+    });
+  });
+
   var converter;
   beforeEach(inject(function($injector){
     converter = $injector.get('ngModelConverter');
@@ -78,6 +85,18 @@ describe('ngModelConverter', function(){
   it('should change date time inputs to be yyyy-MM-ddTHH:mm', inject(function() {
     var value = converter(new Date(2001, 2, 3, 4, 5, 6), 'datetime-local');
     expect(value).toBe('2001-03-03T04:05:06');
+  }));
+
+  it('should use custom converter if given', inject(function() {
+    converterProvider.addConverter('text', function(value) { return 'AAA'; });
+    var value = converter('123', 'text');
+    expect(value).toBe('AAA');
+  }));
+
+  it('should use custom converter over default one if given', inject(function() {
+    converterProvider.addConverter('date', function(value) { return 'AAA'; });
+    var value = converter(new Date(2001, 2, 3, 4, 5, 6), 'date');
+    expect(value).toBe('AAA');
   }));
 
 });
