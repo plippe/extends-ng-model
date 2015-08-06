@@ -1,0 +1,59 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+  <style>
+    label { display:inline-block; width: 200px; }
+    form { padding-bottom: 25px; }
+    form div { padding-bottom: 5px; }
+  </style>
+</head>
+<body>
+    <h1>Example: ngModelLocation</h1>
+    <div ng-controller="myController">
+        <form>
+            <div>
+                <label>Text</label>
+                <input type="text" ng-model="form.text" ng-model-location="" />
+            </div>
+            <div>
+                <label>Number</label>
+                <input type="number" ng-model="form.number" ng-model-location="" />
+            </div>
+        </form>
+
+        <pre class="raw">{{form | json}}</pre>
+    </div>
+
+    <script src="../bower_components/angular/angular.min.js"></script>
+    <script src="../dist/extends-ng-model.min.js"></script>
+    <script>
+        angular.module("myApp", ['extendsNgModel'])
+            .config(function(ngModelConverterProvider) {
+              // Text to camel case
+              var toCamelCase = function(modelValue) {
+                return modelValue
+                  .toLowerCase()
+                  .replace(/ (.)/g, function(el) { return el[1].toUpperCase() }); },
+                fromCamelCase = function(storageValue) { return storageValue
+                  .replace(/([a-z])([A-Z])/g, "$1 $2")
+                  .toLowerCase() };
+
+              ngModelConverterProvider.addToStorageConverter('ngModelLocation', 'text', toCamelCase);
+              ngModelConverterProvider.addFromStorageConverter('ngModelLocation', 'text', fromCamelCase);
+
+              // Number to hex
+              var toHex = function(modelValue) { return modelValue.toString(16); },
+                fromHex = function(storageValue) { return parseInt(storageValue, 16); };
+
+              ngModelConverterProvider.addToStorageConverter('ngModelLocation', 'number', toHex);
+              ngModelConverterProvider.addFromStorageConverter('ngModelLocation', 'number', fromHex);
+            })
+            .controller("myController", function($scope) {
+                $scope.form = {
+                    text: "abcd",
+                    number: 123
+                }
+            });
+    </script>
+</body>
+</html>
