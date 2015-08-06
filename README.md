@@ -122,3 +122,24 @@ If you prefer a cookie name different to the `ngModel` name, set the desired val
 **Warning:**
   - `ngModelCookie` requires the `ngCookies` module to work
   - `ngModelCookie` requires the `ngModel` directive to work
+
+
+## Customize reading / writing to storage
+
+Directives that read and write to storage have a default converter that provide basic functionality. If you require something more specific feel free to add your own custom converter.
+
+Custom converters are functions wired up during the configuration phase. They are called depending on the storage type, the input type, and whether a value is read or written to the storage location.
+
+The following example will store `ngModelLocation` numbers as hexadecimal values in the query string over the default decimal format.
+
+```js
+angular
+  .module("myApp", ['extendsNgModel'])
+  .config(function(ngModelConverterProvider) {
+    var toHex = function(modelValue) { return modelValue.toString(16); },
+      fromHex = function(storageValue) { return parseInt(storageValue, 16); };
+
+    ngModelConverterProvider.addToStorageConverter('ngModelLocation', 'number', toHex);
+    ngModelConverterProvider.addFromStorageConverter('ngModelLocation', 'number', fromHex);
+  });
+```
