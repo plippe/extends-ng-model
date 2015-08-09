@@ -14,11 +14,12 @@ module.exports = function(config){
       'karma-coverage',
       'karma-coveralls',
       'karma-chrome-launcher',
-      'karma-jasmine'
+      'karma-jasmine',
+      'karma-spec-reporter'
     ],
 
     preprocessors: { 'dist/**/*.js': 'coverage' },
-    reporters: ['coverage', 'coveralls'],
+    reporters: ['spec', 'coverage', 'coveralls'],
     coverageReporter: {
       type : 'lcov',
       dir : 'coverage/'
