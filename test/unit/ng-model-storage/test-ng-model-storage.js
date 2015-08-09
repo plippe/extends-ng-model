@@ -8,8 +8,8 @@ describe('ngModelStorage', function(){
     scope = $injector.get('$rootScope');
 
     fakeStorage = [];
-    angular.module('extendsNgModel').directive('ngModelTest', function(ngModelStorage) {
-      var name = "ngModelTest",
+    angular.module('extendsNgModel').directive('ngModelStorageTest', function(ngModelStorage) {
+      var name = "ngModelStorageTest",
         getValue = function(key) { return function() { return fakeStorage[key]; } },
         putValue = function(key, value) { fakeStorage[key] = value; },
         link = ngModelStorage(name, getValue, putValue);
@@ -23,7 +23,7 @@ describe('ngModelStorage', function(){
   }));
 
   it('should not change model, nor view if storage is undefined', inject(function() {
-    var element = compile('<input ng-model="text" ng-model-test="" />')(scope);
+    var element = compile('<input ng-model="text" ng-model-storage-test="" />')(scope);
     scope.text = 'hello world';
 
     scope.$digest();
@@ -32,7 +32,7 @@ describe('ngModelStorage', function(){
   }));
 
   it('should change model, and view if storage is defined', inject(function() {
-    var element = compile('<input ng-model="text" ng-model-test="" />')(scope);
+    var element = compile('<input ng-model="text" ng-model-storage-test="" />')(scope);
     scope.text = 'hello world';
     fakeStorage['text'] = 'new value';
 
@@ -42,7 +42,7 @@ describe('ngModelStorage', function(){
   }));
 
   it('should change model, and view if storage changes', inject(function() {
-    var element = compile('<input ng-model="text" ng-model-test="" />')(scope);
+    var element = compile('<input ng-model="text" ng-model-storage-test="" />')(scope);
     scope.text = 'hello world';
 
     scope.$digest();
@@ -55,7 +55,7 @@ describe('ngModelStorage', function(){
   }));
 
   it('should change model, and storage if view changes', inject(function() {
-    var element = compile('<input ng-model="text" ng-model-test="" />')(scope);
+    var element = compile('<input ng-model="text" ng-model-storage-test="" />')(scope);
     scope.text = 'hello world';
 
     scope.$digest();
@@ -69,7 +69,7 @@ describe('ngModelStorage', function(){
   }));
 
   it('should behave the same with numbers', inject(function() {
-    var element = compile('<input type="number" ng-model="number" ng-model-test="" />')(scope);
+    var element = compile('<input type="number" ng-model="number" ng-model-storage-test="" />')(scope);
     scope.number = 123.45;
 
     scope.$digest();
@@ -89,7 +89,7 @@ describe('ngModelStorage', function(){
   }));
 
   it('should behave the same with checkboxes', inject(function() {
-    var element = compile('<input type="checkbox" ng-model="checkbox" ng-model-test="" />')(scope);
+    var element = compile('<input type="checkbox" ng-model="checkbox" ng-model-storage-test="" />')(scope);
     scope.checkbox = true;
 
     scope.$digest();
@@ -109,7 +109,7 @@ describe('ngModelStorage', function(){
   }));
 
   it('should behave the same with dates', inject(function() {
-    var element = compile('<input type="date" ng-model="date" ng-model-test="" />')(scope);
+    var element = compile('<input type="date" ng-model="date" ng-model-storage-test="" />')(scope);
     scope.date = new Date('2000-01-01');
 
     scope.$digest();
@@ -129,7 +129,7 @@ describe('ngModelStorage', function(){
   }));
 
   it('should behave the same with emails', inject(function() {
-    var element = compile('<input type="email" ng-model="email" ng-model-test="" />')(scope);
+    var element = compile('<input type="email" ng-model="email" ng-model-storage-test="" />')(scope);
     scope.email = 'ab@cd.ef';
 
     scope.$digest();
@@ -149,7 +149,7 @@ describe('ngModelStorage', function(){
   }));
 
   it('should behave the same with months', inject(function() {
-    var element = compile('<input type="month" ng-model="month" ng-model-test="" />')(scope);
+    var element = compile('<input type="month" ng-model="month" ng-model-storage-test="" />')(scope);
     scope.month = new Date('2000-01');
 
     scope.$digest();
@@ -169,7 +169,7 @@ describe('ngModelStorage', function(){
   }));
 
   it('should behave the same with weeks', inject(function() {
-    var element = compile('<input type="week" ng-model="week" ng-model-test="" />')(scope);
+    var element = compile('<input type="week" ng-model="week" ng-model-storage-test="" />')(scope);
     scope.week = new Date('2000-01-03');
 
     scope.$digest();
@@ -189,7 +189,7 @@ describe('ngModelStorage', function(){
   }));
 
   it('should behave the same with times', inject(function() {
-    var element = compile('<input type="time" ng-model="time" ng-model-test="" />')(scope);
+    var element = compile('<input type="time" ng-model="time" ng-model-storage-test="" />')(scope);
     scope.time = new Date('1970-01-01 01:00:00');
 
     scope.$digest();
@@ -209,7 +209,7 @@ describe('ngModelStorage', function(){
   }));
 
   it('should behave the same with date times', inject(function() {
-    var element = compile('<input type="datetime-local" ng-model="datetime" ng-model-test="" />')(scope);
+    var element = compile('<input type="datetime-local" ng-model="datetime" ng-model-storage-test="" />')(scope);
     scope.datetime = new Date('2000-01-01T01:00:00');
 
     scope.$digest();
@@ -229,8 +229,8 @@ describe('ngModelStorage', function(){
   }));
 
   it('should behave the same with radio buttons', inject(function() {
-    var elementA = compile('<input type="radio" value="a" ng-model="radio" ng-model-test="">')(scope);
-    var elementB = compile('<input type="radio" value="b" ng-model="radio" ng-model-test="">')(scope);
+    var elementA = compile('<input type="radio" value="a" ng-model="radio" ng-model-storage-test="">')(scope);
+    var elementB = compile('<input type="radio" value="b" ng-model="radio" ng-model-storage-test="">')(scope);
     scope.radio = 'a';
 
     scope.$digest();
@@ -252,7 +252,7 @@ describe('ngModelStorage', function(){
   }));
 
   it('should behave the same with urls', inject(function() {
-    var element = compile('<input type="url" ng-model="url" ng-model-test="" />')(scope);
+    var element = compile('<input type="url" ng-model="url" ng-model-storage-test="" />')(scope);
     scope.url = 'http://google.com';
 
     scope.$digest();
@@ -273,7 +273,7 @@ describe('ngModelStorage', function(){
 
   it('should behave the same with select', inject(function() {
     var element = compile(' \
-      <select ng-model="select" ng-model-test=""> \
+      <select ng-model="select" ng-model-storage-test=""> \
         <option value="a">A</option> \
         <option value="b">B</option> \
       </select> \
@@ -297,7 +297,7 @@ describe('ngModelStorage', function(){
   }));
 
   it('should behave the same with textarea', inject(function() {
-    var element = compile('<textarea ng-model="textarea" ng-model-test=""></textarea>')(scope);
+    var element = compile('<textarea ng-model="textarea" ng-model-storage-test=""></textarea>')(scope);
     scope.textarea = 'a';
 
     scope.$digest();
@@ -317,7 +317,7 @@ describe('ngModelStorage', function(){
   }));
 
   it('should allow custom storage name', inject(function() {
-    var element = compile('<input ng-model="input" ng-model-test="search" />')(scope);
+    var element = compile('<input ng-model="input" ng-model-storage-test="search" />')(scope);
     scope.input = 'abc';
 
     scope.$digest();
