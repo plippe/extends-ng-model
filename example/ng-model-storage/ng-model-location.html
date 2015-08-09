@@ -8,75 +8,74 @@
   </style>
 </head>
 <body>
-    <h1>Example: ngModelCookie</h1>
+    <h1>Example: ngModelLocation</h1>
     <div ng-controller="myController">
         <form>
             <div>
                 <label>Text</label>
-                <input type="text" ng-model="form.text" ng-model-cookie="" />
+                <input type="text" ng-model="form.text" ng-model-location="" />
             </div>
             <div>
                 <label>Number</label>
-                <input type="number" ng-model="form.number" ng-model-cookie="" />
+                <input type="number" ng-model="form.number" ng-model-location="" />
             </div>
             <div>
                 <label>Checkbox</label>
-                <input type="checkbox" ng-model="form.checkbox" ng-model-cookie="" />
+                <input type="checkbox" ng-model="form.checkbox" ng-model-location="" />
             </div>
             <div>
                 <label>Date</label>
-                <input type="date" ng-model="form.date" ng-model-cookie="" />
+                <input type="date" ng-model="form.date" ng-model-location="" />
             </div>
             <div>
                 <label>Email</label>
-                <input type="email" ng-model="form.email" ng-model-cookie="" />
+                <input type="email" ng-model="form.email" ng-model-location="" />
             </div>
             <div>
                 <label>Month</label>
-                <input type="month" ng-model="form.month" ng-model-cookie="" />
+                <input type="month" ng-model="form.month" ng-model-location="" />
             </div>
             <div>
                 <label>Week</label>
-                <input type="week" ng-model="form.week" ng-model-cookie="" />
+                <input type="week" ng-model="form.week" ng-model-location="" />
             </div>
             <div>
                 <label>Time</label>
-                <input type="time" ng-model="form.time" ng-model-cookie="" />
+                <input type="time" ng-model="form.time" ng-model-location="" />
             </div>
             <div>
                 <label>Date Time</label>
-                <input type="datetime-local" ng-model="form.datetime" ng-model-cookie="" />
+                <input type="datetime-local" ng-model="form.datetime" ng-model-location="" />
             </div>
             <div>
                 <label>Radio</label>
-                <input type="radio" value="a" ng-model="form.radio" ng-model-cookie="">
-                <input type="radio" value="b" ng-model="form.radio" ng-model-cookie="">
+                <input type="radio" value="a" ng-model="form.radio" ng-model-location="">
+                <input type="radio" value="b" ng-model="form.radio" ng-model-location="">
             </div>
             <div>
                 <label>Url</label>
-                <input type="url" ng-model="form.url" ng-model-cookie="" />
+                <input type="url" ng-model="form.url" ng-model-location="" />
             </div>
             <div>
                 <label>Select</label>
-                <select ng-model="form.select" ng-model-cookie="">
+                <select ng-model="form.select" ng-model-location="">
                   <option value="a">A</option>
                   <option value="b">B</option>
                 </select>
             </div>
             <div>
                 <label>Text Area</label>
-                <textarea ng-model="form.textarea" ng-model-cookie=""></textarea>
+                <textarea ng-model="form.textarea" ng-model-location=""></textarea>
             </div>
         </form>
 
         <pre class="raw">{{form | json}}</pre>
     </div>
 
-    <script src="../bower_components/angular/angular.min.js"></script>
-    <script src="../bower_components/angular-cookies/angular-cookies.min.js"></script>
-    <script src="../dist/extends-ng-model.min.js"></script>
+    <script src="../../bower_components/angular/angular.min.js"></script>
+    <script src="../../dist/extends-ng-model.min.js"></script>
     <script>
-        angular.module("myApp", ['ngCookies', 'extendsNgModel'])
+        angular.module("myApp", ['extendsNgModel'])
             .controller("myController", function($scope) {
                 $scope.form = {
                     text: "abcd",

@@ -58,7 +58,7 @@ The following example will synchronise `filter.name`, the `ng-model` and the que
 <input name="title" ng-model="filter.name" ng-model-location="" />
 ```
 
-This works for [all input types defined by Angular](https://docs.angularjs.org/api/ng/input) as well as `select` and `textarea` ([see examples](https://github.com/Plippe/extends-ng-model/blob/master/example/ng-model-location.html)).
+This works for [all input types defined by Angular](https://docs.angularjs.org/api/ng/input) as well as `select` and `textarea` ([see examples](https://github.com/Plippe/extends-ng-model/blob/master/example/ng-model-storage/ng-model-location.html)).
 
 If you prefer a query string name different to the `ngModel` name, set the desired value in the `ngModelLocation` argument like the example bellow.
 
@@ -83,7 +83,7 @@ The following example will synchronise `form.name`, the `ng-model` and the cache
 <input name="title" ng-model="form.name" ng-model-cache="" />
 ```
 
-This works for [all input types defined by Angular](https://docs.angularjs.org/api/ng/input) as well as `select` and `textarea` ([see examples](https://github.com/Plippe/extends-ng-model/blob/master/example/ng-model-cache.html)).
+This works for [all input types defined by Angular](https://docs.angularjs.org/api/ng/input) as well as `select` and `textarea` ([see examples](https://github.com/Plippe/extends-ng-model/blob/master/example/ng-model-storage/ng-model-cache.html)).
 
 If you prefer a cache name different to the `ngModel` name, set the desired value in the `ngModelCache` argument like the example bellow.
 
@@ -108,7 +108,7 @@ The following example will synchronise `form.pageSize`, the `ng-model` and the c
 <input name="title" ng-model="form.pageSize" ng-model-cookie="" />
 ```
 
-This works for [all input types defined by Angular](https://docs.angularjs.org/api/ng/input) as well as `select` and `textarea` ([see examples](https://github.com/Plippe/extends-ng-model/blob/master/example/ng-model-cookie.html)).
+This works for [all input types defined by Angular](https://docs.angularjs.org/api/ng/input) as well as `select` and `textarea` ([see examples](https://github.com/Plippe/extends-ng-model/blob/master/example/ng-model-storage/ng-model-cookie.html)).
 
 If you prefer a cookie name different to the `ngModel` name, set the desired value in the `ngModelCookie` argument like the example bellow.
 
@@ -126,9 +126,9 @@ If you prefer a cookie name different to the `ngModel` name, set the desired val
 
 ## Customize reading / writing to storage
 
-Directives that read and write to storage have a default converter that provide basic functionality. If you require something more specific feel free to add your own custom converter.
+Directives that read and write to storage have a default converter that provide basic functionality. If you require something more specific feel free to add your own custom converters.
 
-Custom converters are functions wired up during the configuration phase. They are called depending on the storage type, the input type, and whether a value is read or written to the storage location.
+Custom converters are wired up during the configuration phase. There are two lists of them, one to write to the storage `pushToStorageConverter` and the other to write from the storage `pushFromStorageConverter` (to the model). The functions take two functions as arguments: the first takes the element's attribute and returns a boolean if we wish to apply the converter, the second function takes the value and returns the updated value.
 
 The following example will store `ngModelLocation` numbers as hexadecimal values in the query string over the default decimal format.
 
@@ -136,10 +136,13 @@ The following example will store `ngModelLocation` numbers as hexadecimal values
 angular
   .module("myApp", ['extendsNgModel'])
   .config(function(ngModelConverterProvider) {
-    var toHex = function(modelValue) { return modelValue.toString(16); },
+    var isNumber = function(attr) { return attr.type === 'number'; },
+      toHex = function(modelValue) { return modelValue.toString(16); },
       fromHex = function(storageValue) { return parseInt(storageValue, 16); };
 
-    ngModelConverterProvider.addToStorageConverter('ngModelLocation', 'number', toHex);
-    ngModelConverterProvider.addFromStorageConverter('ngModelLocation', 'number', fromHex);
+    ngModelConverterProvider.pushToStorageConverter(isNumber, toHex);
+    ngModelConverterProvider.pushFromStorageConverter(isNumber, fromHex);
   });
 ```
+
+**Warning:** Only the first positive converter is applied

@@ -1,12 +1,11 @@
-angular.module('extendsNgModel').factory('ngModelStorage', function(ngModelConverter) {
+angular.module('extendsNgModel').factory('ngModelStorage', function($parse, ngModelConverter) {
   var constructor = function(storageName, getValue, putValue) {
     var link = function(scope, element, attributes, ngModelCtrl) {
-      var inputType = (attributes.type || 'text'),
-        storageKey = attributes[storageName] || attributes.ngModel,
+      var storageKey = attributes[storageName] || attributes.ngModel,
         storageValue = getValue(storageKey);
 
       var updateStorageValue = function(ngModelValue) {
-        var updatedValue = ngModelConverter.toStorage(storageName, inputType, ngModelValue);
+        var updatedValue = ngModelConverter.toStorage(ngModelValue, attributes);
 
         putValue(storageKey, updatedValue);
         return ngModelValue;
@@ -14,10 +13,9 @@ angular.module('extendsNgModel').factory('ngModelStorage', function(ngModelConve
 
       var updateModelValue = function(storageValue) {
         var value = angular.isDefined(storageValue) ? storageValue : ngModelCtrl.$modelValue,
-          updatedValue = ngModelConverter.fromStorage(storageName, inputType, value);
+          updatedValue = ngModelConverter.fromStorage(value, attributes);
 
-        ngModelCtrl.$setViewValue(updatedValue, this);
-        ngModelCtrl.$render();
+        $parse(attributes.ngModel).assign(scope, updatedValue);
       }
 
       ngModelCtrl.$parsers.push(updateStorageValue);
