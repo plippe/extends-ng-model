@@ -58,7 +58,7 @@ The following example will synchronise `filter.name`, the `ng-model` and the que
 <input name="title" ng-model="filter.name" ng-model-location="" />
 ```
 
-This works for [all input types defined by Angular](https://docs.angularjs.org/api/ng/input) as well as `select` and `textarea` ([see examples](https://github.com/Plippe/extends-ng-model/blob/master/example/ng-model-location.html)).
+This works for [all input types defined by Angular](https://docs.angularjs.org/api/ng/input) as well as `select` and `textarea` ([see examples](https://github.com/Plippe/extends-ng-model/blob/master/example/ng-model-storage/ng-model-location.html)).
 
 If you prefer a query string name different to the `ngModel` name, set the desired value in the `ngModelLocation` argument like the example bellow.
 
@@ -83,7 +83,7 @@ The following example will synchronise `form.name`, the `ng-model` and the cache
 <input name="title" ng-model="form.name" ng-model-cache="" />
 ```
 
-This works for [all input types defined by Angular](https://docs.angularjs.org/api/ng/input) as well as `select` and `textarea` ([see examples](https://github.com/Plippe/extends-ng-model/blob/master/example/ng-model-cache.html)).
+This works for [all input types defined by Angular](https://docs.angularjs.org/api/ng/input) as well as `select` and `textarea` ([see examples](https://github.com/Plippe/extends-ng-model/blob/master/example/ng-model-storage/ng-model-cache.html)).
 
 If you prefer a cache name different to the `ngModel` name, set the desired value in the `ngModelCache` argument like the example bellow.
 
@@ -108,7 +108,7 @@ The following example will synchronise `form.pageSize`, the `ng-model` and the c
 <input name="title" ng-model="form.pageSize" ng-model-cookie="" />
 ```
 
-This works for [all input types defined by Angular](https://docs.angularjs.org/api/ng/input) as well as `select` and `textarea` ([see examples](https://github.com/Plippe/extends-ng-model/blob/master/example/ng-model-cookie.html)).
+This works for [all input types defined by Angular](https://docs.angularjs.org/api/ng/input) as well as `select` and `textarea` ([see examples](https://github.com/Plippe/extends-ng-model/blob/master/example/ng-model-storage/ng-model-cookie.html)).
 
 If you prefer a cookie name different to the `ngModel` name, set the desired value in the `ngModelCookie` argument like the example bellow.
 
