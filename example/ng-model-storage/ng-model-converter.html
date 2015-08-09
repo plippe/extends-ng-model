@@ -30,23 +30,26 @@
         angular.module("myApp", ['extendsNgModel'])
             .config(function(ngModelConverterProvider) {
               // Text to camel case
-              var toCamelCase = function(modelValue) {
-                return modelValue
+              var isLocationText = function(attr) {
+                return angular.isDefined(attr.ngModelLocation) && attr.type === 'text'; },
+                toCamelCase = function(modelValue) { return modelValue
                   .toLowerCase()
                   .replace(/ (.)/g, function(el) { return el[1].toUpperCase() }); },
                 fromCamelCase = function(storageValue) { return storageValue
                   .replace(/([a-z])([A-Z])/g, "$1 $2")
                   .toLowerCase() };
 
-              ngModelConverterProvider.addToStorageConverter('ngModelLocation', 'text', toCamelCase);
-              ngModelConverterProvider.addFromStorageConverter('ngModelLocation', 'text', fromCamelCase);
+              ngModelConverterProvider.pushToStorageConverter(isLocationText, toCamelCase);
+              ngModelConverterProvider.pushFromStorageConverter(isLocationText, fromCamelCase);
 
               // Number to hex
-              var toHex = function(modelValue) { return modelValue.toString(16); },
+              var isLocationNumber = function(attr) {
+                return angular.isDefined(attr.ngModelLocation) && attr.type === 'number'; },
+                toHex = function(modelValue) { return modelValue.toString(16); },
                 fromHex = function(storageValue) { return parseInt(storageValue, 16); };
 
-              ngModelConverterProvider.addToStorageConverter('ngModelLocation', 'number', toHex);
-              ngModelConverterProvider.addFromStorageConverter('ngModelLocation', 'number', fromHex);
+              ngModelConverterProvider.pushToStorageConverter(isLocationNumber, toHex);
+              ngModelConverterProvider.pushFromStorageConverter(isLocationNumber, fromHex);
             })
             .controller("myController", function($scope) {
                 $scope.form = {
