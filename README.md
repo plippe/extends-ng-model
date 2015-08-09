@@ -126,9 +126,9 @@ If you prefer a cookie name different to the `ngModel` name, set the desired val
 
 ## Customize reading / writing to storage
 
-Directives that read and write to storage have a default converter that provide basic functionality. If you require something more specific feel free to add your own custom converter.
+Directives that read and write to storage have a default converter that provide basic functionality. If you require something more specific feel free to add your own custom converters.
 
-Custom converters are functions wired up during the configuration phase. They are called depending on the storage type, the input type, and whether a value is read or written to the storage location.
+Custom converters are wired up during the configuration phase. There are two lists of them, one to write to the storage `pushToStorageConverter` and the other to write from the storage `pushFromStorageConverter` (to the model). The functions take two functions as arguments: the first takes the element's attribute and returns a boolean if we wish to apply the converter, the second function takes the value and returns the updated value.
 
 The following example will store `ngModelLocation` numbers as hexadecimal values in the query string over the default decimal format.
 
@@ -136,10 +136,13 @@ The following example will store `ngModelLocation` numbers as hexadecimal values
 angular
   .module("myApp", ['extendsNgModel'])
   .config(function(ngModelConverterProvider) {
-    var toHex = function(modelValue) { return modelValue.toString(16); },
+    var isNumber = function(attr) { return attr.type === 'number'; },
+      toHex = function(modelValue) { return modelValue.toString(16); },
       fromHex = function(storageValue) { return parseInt(storageValue, 16); };
 
-    ngModelConverterProvider.addToStorageConverter('ngModelLocation', 'number', toHex);
-    ngModelConverterProvider.addFromStorageConverter('ngModelLocation', 'number', fromHex);
+    ngModelConverterProvider.pushToStorageConverter(isNumber, toHex);
+    ngModelConverterProvider.pushFromStorageConverter(isNumber, fromHex);
   });
 ```
+
+**Warning:** Only the first positive converter is applied
