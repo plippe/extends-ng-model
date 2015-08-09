@@ -11,32 +11,39 @@ angular.module('extendsNgModel').provider('ngModelConverter', function() {
   this.pushToStorageConverter = addConverter(customToConverter);
 
   this.$get = function($filter) {
-    var ifInputType = function(inputTypesToMatch) {
+    var arrayOfString = function(arg) {
       switch(true) {
-        case (angular.isString(inputTypesToMatch)):
-          inputTypesToMatch = [inputTypesToMatch];
-          break
-        case (angular.isArray(inputTypesToMatch)):
-          break
-        default:
-          inputTypesToMatch = [];
-      }
-
-      return function(inputAttributes) {
-        var inputType = inputAttributes.type || 'text';
-        return inputTypesToMatch.indexOf(inputType.toLowerCase()) !== -1;
-      }
-    },
+        case (angular.isString(arg)): return [arg];
+        case (angular.isArray(arg)): return arg;
+        default: return [];
+      } },
+      ifInputType = function(inputTypesToMatch) {
+        inputTypesToMatch = arrayOfString(inputTypesToMatch);
+        return function(inputAttributes) {
+          var inputType = inputAttributes.type || 'text';
+          return inputTypesToMatch.indexOf(inputType.toLowerCase()) !== -1;
+        } },
+      hasAttribute = function(attributeName) {
+        attributeName = arrayOfString(attributeName);
+        return function(inputAttributes) {
+          return angular.isDefined(inputAttributes[attributeName]);
+        } },
       dateFilter = $filter('date'),
       dateInputs = ['date', 'month', 'week', 'time', 'datetime-local'],
       defaultFromConverter = [
         { match: ifInputType('number'), convert: function(value) { return parseFloat(value); }},
-        { match: ifInputType('checkbox'), convert: function(value) { return value === true || value === "true"; }},
-        { match: ifInputType(dateInputs), convert: function(value) { return new Date(value); }}
+        { match: ifInputType('checkbox'),
+          convert: function(value) { return value === true || value === "true"; }},
+        { match: ifInputType(dateInputs) && hasAttribute('ngModelTimestamp'),
+          convert: function(value) { return parseInt(value); }},
+        { match: ifInputType(dateInputs),
+          convert: function(value) { return new Date(value); }}
       ],
       defaultToConverter = [
-        { match: ifInputType(dateInputs), convert: function(value) {
-          return dateFilter(value, 'yyyy-MM-ddTHH:mm:ss'); }}
+        { match: ifInputType(dateInputs) && hasAttribute('ngModelTimestamp'),
+          convert: function(value) { return value; }},
+        { match: ifInputType(dateInputs),
+          convert: function(value) { return dateFilter(value, 'yyyy-MM-ddTHH:mm:ss'); }}
       ],
       convert = function(value, attributes, converters) {
         for(i in converters) {

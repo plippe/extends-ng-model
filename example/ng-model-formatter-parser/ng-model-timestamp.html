@@ -31,6 +31,12 @@
                 <label>Timestamp - datetime local</label>
                 <input type="datetime-local" ng-model="form.datetime" ng-model-timestamp="" />
             </div>
+            <div>
+                <label>Timestamp - storage</label>
+                <input type="date" ng-model="form.storage"
+                  ng-model-location=""
+                  ng-model-timestamp=""/>
+            </div>
 
             <a href="#" ng-click="reset()">Reset Form</a>
         </form>
@@ -49,7 +55,8 @@
                       month: 2678400000,
                       week: 604800000,
                       time: 3600000,
-                      datetime: 2678400000
+                      datetime: 2678400000,
+                      storage: 0
                   }
                 }
 

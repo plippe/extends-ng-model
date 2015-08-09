@@ -15,6 +15,10 @@ angular.module('extendsNgModel').factory('ngModelStorage', function($parse, ngMo
         var value = angular.isDefined(storageValue) ? storageValue : ngModelCtrl.$modelValue,
           updatedValue = ngModelConverter.fromStorage(value, attributes);
 
+        ngModelCtrl.$parsers.map(function(parser) {
+          updatedValue = parser(updatedValue) || updatedValue;
+        });
+
         $parse(attributes.ngModel).assign(scope, updatedValue);
       }
 

@@ -2,10 +2,24 @@ describe('ngModelTimestamp', function(){
 
   beforeEach(module('extendsNgModel'));
 
-  var compile, scope;
+  var compile, scope, storage;
   beforeEach(inject(function($injector){
     compile = $injector.get('$compile');
     scope = $injector.get('$rootScope');
+
+    fakeStorage = [];
+    angular.module('extendsNgModel').directive('ngModelStorageTimestamp', function(ngModelStorage) {
+      var name = "ngModelTest",
+        getValue = function(key) { return function() { return fakeStorage[key]; } },
+        putValue = function(key, value) { fakeStorage[key] = value; },
+        link = ngModelStorage(name, getValue, putValue);
+
+      return {
+        require: 'ngModel',
+        restrict: 'A',
+        link: link
+      };
+    });
   }));
 
   it('should convert date to timestamp', inject(function() {
@@ -76,6 +90,26 @@ describe('ngModelTimestamp', function(){
     element.triggerHandler('change');
     scope.$digest();
     expect(scope.date).toBe(946684800000);
+  }));
+
+  it('should behave the same as storage and store a timestamp', inject(function() {
+    var element = compile('<input type="date" ng-model="date" ng-model-storage-timestamp="" ng-model-timestamp="" />')(scope);
+    scope.date = 0;
+
+    scope.$digest();
+    expect(scope.date).toBe(0);
+    expect(element.val()).toBe('1970-01-01');
+
+    fakeStorage['date'] = 946684800000;
+    scope.$digest();
+    expect(scope.date).toBe(946684800000);
+    expect(element.val()).toBe('2000-01-01');
+
+    element.val('1970-01-01');
+    element.triggerHandler('change');
+    scope.$digest();
+    expect(scope.date).toBe(0);
+    expect(fakeStorage['date']).toBe(0);
   }));
 
 });
