@@ -2,9 +2,14 @@ angular.module('extendsNgModel').factory('ngModelStorage', function($parse, ngMo
   var constructor = function(storageName, getValue, putValue) {
     var link = function(scope, element, attributes, ngModelCtrl) {
       var storageKey = attributes[storageName] || attributes.ngModel,
-        storageValue = getValue(storageKey);
+        storageValue = getValue(storageKey),
+        oldNgModelValue,
+        oldStorageValue;
 
       var updateStorageValue = function(ngModelValue) {
+        if(oldNgModelValue === ngModelValue) { return; }
+        oldNgModelValue = ngModelValue;
+
         var updatedValue = ngModelConverter.toStorage(ngModelValue, attributes);
 
         putValue(storageKey, updatedValue);
@@ -12,6 +17,9 @@ angular.module('extendsNgModel').factory('ngModelStorage', function($parse, ngMo
       }
 
       var updateModelValue = function(storageValue) {
+        if(oldStorageValue === storageValue) { return; }
+        oldStorageValue = storageValue;
+
         var value = angular.isDefined(storageValue) ? storageValue : ngModelCtrl.$modelValue,
           updatedValue = ngModelConverter.fromStorage(value, attributes);
 
