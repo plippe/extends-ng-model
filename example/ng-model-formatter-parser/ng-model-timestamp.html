@@ -1,0 +1,67 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+  <style>
+    label { display:inline-block; width: 200px; }
+    form { padding-bottom: 25px; }
+    form div { padding-bottom: 5px; }
+  </style>
+</head>
+<body>
+    <h1>Example: ngModel Formatter Parser</h1>
+    <div ng-controller="myController">
+        <form>
+            <div>
+                <label>Timestamp - date</label>
+                <input type="date" ng-model="form.date" ng-model-timestamp="" />
+            </div>
+            <div>
+                <label>Timestamp - month</label>
+                <input type="month" ng-model="form.month" ng-model-timestamp="" />
+            </div>
+            <div>
+                <label>Timestamp - week</label>
+                <input type="week" ng-model="form.week" ng-model-timestamp="" />
+            </div>
+            <div>
+                <label>Timestamp - time</label>
+                <input type="time" ng-model="form.time" ng-model-timestamp="" />
+            </div>
+            <div>
+                <label>Timestamp - datetime local</label>
+                <input type="datetime-local" ng-model="form.datetime" ng-model-timestamp="" />
+            </div>
+            <div>
+                <label>Timestamp - storage</label>
+                <input type="date" ng-model="form.storage"
+                  ng-model-location=""
+                  ng-model-timestamp=""/>
+            </div>
+
+            <a href="#" ng-click="reset()">Reset Form</a>
+        </form>
+
+        <pre class="raw">{{form | json}}</pre>
+    </div>
+
+    <script src="../../bower_components/angular/angular.min.js"></script>
+    <script src="../../dist/extends-ng-model.min.js"></script>
+    <script>
+        angular.module("myApp", ['extendsNgModel'])
+            .controller("myController", function($scope) {
+                $scope.reset = function() {
+                  $scope.form = {
+                      date: 0,
+                      month: 2678400000,
+                      week: 604800000,
+                      time: 3600000,
+                      datetime: 2678400000,
+                      storage: 0
+                  }
+                }
+
+                $scope.reset();
+            });
+    </script>
+</body>
+</html>
