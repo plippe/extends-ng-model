@@ -10,9 +10,9 @@ angular.module('extendsNgModel').directive('ngModelTimestamp', function() {
       }
 
       var fromTimestamp = function(viewValue) {
-        return angular.isDate(viewValue) ?
-          viewValue :
-          new Date(viewValue);
+        return angular.isNumber(viewValue) ?
+          new Date(viewValue) :
+          viewValue;
       }
 
       ngModelCtrl.$formatters.push(fromTimestamp);
