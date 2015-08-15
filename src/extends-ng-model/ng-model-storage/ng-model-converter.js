@@ -1,14 +1,14 @@
 angular.module('extendsNgModel').provider('ngModelConverter', function() {
-  var customFromConverter = [],
-    customToConverter = [],
-    addConverter = function(customConverter) {
+  var customFromConverters = [],
+    customToConverters = [],
+    addConverter = function(customConverters) {
       return function(match, convert) {
-        customConverter.push({match: match, convert: convert });
+        customConverters.push({match: match, convert: convert });
       }
     };
 
-  this.pushFromStorageConverter = addConverter(customFromConverter);
-  this.pushToStorageConverter = addConverter(customToConverter);
+  this.pushFromStorageConverter = addConverter(customFromConverters);
+  this.pushToStorageConverter = addConverter(customToConverters);
 
   this.$get = function($filter) {
     var arrayOfString = function(arg) {
@@ -23,14 +23,16 @@ angular.module('extendsNgModel').provider('ngModelConverter', function() {
           var inputType = inputAttributes.type || 'text';
           return inputTypesToMatch.indexOf(inputType.toLowerCase()) !== -1;
         } },
-      hasAttribute = function(attributeName) {
-        attributeName = arrayOfString(attributeName);
+      hasAttribute = function(attributeNamesToMatch) {
+        attributeNamesToMatch = arrayOfString(attributeNamesToMatch);
         return function(inputAttributes) {
-          return angular.isDefined(inputAttributes[attributeName]);
+          return attributeNamesToMatch
+            .map(function(attributeName) { return angular.isDefined(inputAttributes[attributeName]); })
+            .reduce(function(a, b) { return a && b });
         } },
       dateFilter = $filter('date'),
       dateInputs = ['date', 'month', 'week', 'time', 'datetime-local'],
-      defaultFromConverter = [
+      defaultFromConverters = [
         { match: ifInputType('number'), convert: function(value) { return parseFloat(value); }},
         { match: ifInputType('checkbox'),
           convert: function(value) { return value === true || value === "true"; }},
@@ -39,7 +41,7 @@ angular.module('extendsNgModel').provider('ngModelConverter', function() {
         { match: ifInputType(dateInputs),
           convert: function(value) { return new Date(value); }}
       ],
-      defaultToConverter = [
+      defaultToConverters = [
         { match: ifInputType(dateInputs) && hasAttribute('ngModelTimestamp'),
           convert: function(value) { return value; }},
         { match: ifInputType(dateInputs),
@@ -58,10 +60,10 @@ angular.module('extendsNgModel').provider('ngModelConverter', function() {
 
     return {
       fromStorage: function(value, attributes) {
-        return convert(value, attributes, customFromConverter.concat(defaultFromConverter))
+        return convert(value, attributes, customFromConverters.concat(defaultFromConverters))
       },
       toStorage: function(value, attributes) {
-        return convert(value, attributes, customToConverter.concat(defaultToConverter))
+        return convert(value, attributes, customToConverters.concat(defaultToConverters))
       }
     }
   };
