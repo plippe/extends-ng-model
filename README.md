@@ -11,8 +11,8 @@ This project builds on top of this to add new features for `ngModel`.
 ## Getting started
 
 1. Download the library using one of the three terminal commands bellow:
-  - `$ bower install git://github.com/plippe/extends-ng-model.git --save`
-  - `$ npm install git://github.com/plippe/extends-ng-model.git --save`
+  - `$ bower install extends-ng-model --save`
+  - `$ npm install extends-ng-model --save`
   - `$ git clone git@github.com:Plippe/extends-ng-model.git`
 2. Load `angular.min.js`
 3. Load `extends-ng-model.min.js`
