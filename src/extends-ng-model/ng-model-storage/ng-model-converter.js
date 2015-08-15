@@ -23,10 +23,12 @@ angular.module('extendsNgModel').provider('ngModelConverter', function() {
           var inputType = inputAttributes.type || 'text';
           return inputTypesToMatch.indexOf(inputType.toLowerCase()) !== -1;
         } },
-      hasAttribute = function(attributeName) {
-        attributeName = arrayOfString(attributeName);
+      hasAttribute = function(attributeNamesToMatch) {
+        attributeNamesToMatch = arrayOfString(attributeNamesToMatch);
         return function(inputAttributes) {
-          return angular.isDefined(inputAttributes[attributeName]);
+          return attributeNamesToMatch
+            .map(function(attributeName) { return angular.isDefined(inputAttributes[attributeName]); })
+            .reduce(function(a, b) { return a && b });
         } },
       dateFilter = $filter('date'),
       dateInputs = ['date', 'month', 'week', 'time', 'datetime-local'],
