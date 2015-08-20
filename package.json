@@ -1,6 +1,6 @@
 {
   "name": "extends-ng-model",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This project builds on top of ngModel to add new features to angular",
   "main": "dist/extends-ng-model.min.js",
   "dependencies": {
