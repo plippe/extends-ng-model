@@ -48,7 +48,7 @@ angular.module('extendsNgModel').provider('ngModelConverter', function() {
           convert: function(value) { return dateFilter(value, 'yyyy-MM-ddTHH:mm:ss'); }}
       ],
       convert = function(value, attributes, converters) {
-        for(i in converters) {
+        for(var i = 0, l = converters.length; i < l; i++) {
           var converter = converters[i];
           if(converter.match(attributes)) {
             return converter.convert(value);
