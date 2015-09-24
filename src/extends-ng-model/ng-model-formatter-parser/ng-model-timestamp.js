@@ -4,7 +4,7 @@ angular.module('extendsNgModel').directive('ngModelTimestamp', function() {
     restrict: 'A',
     link: function(scope, element, attributes, ngModelCtrl) {
       var toTimestamp = function(modelValue) {
-        return angular.isDefined(modelValue.getTime) ?
+        return angular.isObject(modelValue) && angular.isDefined(modelValue.getTime) ?
           modelValue.getTime() :
           modelValue;
       }

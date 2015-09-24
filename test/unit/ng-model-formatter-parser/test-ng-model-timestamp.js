@@ -112,4 +112,28 @@ describe('ngModelTimestamp', function(){
     expect(fakeStorage['date']).toBe(0);
   }));
 
+  it('should not throw an error when field is cleared', inject(function() {
+    var element = compile('<input type="date" ng-model="date" ng-model-timestamp="" />')(scope);
+    scope.date = 0;
+
+    scope.$digest();
+    expect(scope.date).toBe(0);
+    expect(element.val()).toBe('1970-01-01');
+
+    scope.date = null;
+    scope.$digest();
+    expect(scope.date).toBe(null);
+    expect(element.val()).toBe('');
+
+    scope.date = 946684800000;
+    scope.$digest();
+    expect(scope.date).toBe(946684800000);
+    expect(element.val()).toBe('2000-01-01');
+
+    element.val('');
+    element.triggerHandler('change');
+    scope.$digest();
+    expect(scope.date).toBe(null);
+  }));
+
 });
