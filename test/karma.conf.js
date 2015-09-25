@@ -1,5 +1,5 @@
 module.exports = function(config){
-  config.set({
+  var configuration = {
     basePath : '../',
     files : [
       'node_modules/angular/angular.js',
@@ -24,5 +24,17 @@ module.exports = function(config){
       type : 'lcov',
       dir : 'coverage/'
     }
-  });
+  }
+
+  if (process.env.TRAVIS) {
+    configuration.browsers = ['Chrome_travis_ci'];
+    configuration.customLaunchers = {
+        Chrome_travis_ci: {
+            base: 'Chrome',
+            flags: ['--no-sandbox']
+        }
+    }
+  }
+
+  config.set(configuration);
 };
